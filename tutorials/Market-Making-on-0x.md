@@ -4,7 +4,7 @@ This tutorial will attempt to bridge the knowledge-gap between market-making on 
 
 There are three core activities all centralized exchanges perform:
 
-1. Custody user funds
+1. Taking Custody of user funds
 2. Host and distribute orders
 3. Settle trades
 
@@ -12,13 +12,13 @@ Within the 0x protocol, these tasks are not all undertaken by a single entity no
 
 #### 1. Custody of user funds
 
-Trading on a CEX (centralized exchange) requires that you deposit your assets into an Ethereum addresses the exchange controls. After that point, they have full custody over your funds and must secure them from hackers, rogue employees and other attackers. When trading on 0x, your assets never need to leave your Ethereum address until a trade is settled.
+Trading on a CEX (centralized exchange) requires that you deposit your assets into an Ethereum address the exchange controls. After that point, they have full custody over your funds and must secure them from hackers, rogue employees and other attackers. When trading on 0x, your assets never need to leave your Ethereum address until a trade is settled.
 
 #### 2. Host and distribute orders
 
 0x orders can be hosted by anyone, rather than there being a single entity hosting the orders. Any entity that hosts and distributes 0x orders is called a "relayer". Currently most relayers are centralized entities hosting an API from which orders can be retrieved.
 
-A 0x order is any data packet that contains an [order's details](https://github.com/0xProject/0x-protocol-specification/blob/master/v2/v2-specification.md#order-message-format) together with a [valid signature](https://github.com/0xProject/0x-protocol-specification/blob/master/v2/v2-specification.md#signature-types) (e.g. a valid elliptic curve signature generated from the traders Ethereum address) of it's contents.
+A 0x order is any data packet that contains an [order's details](https://github.com/0xProject/0x-protocol-specification/blob/master/v2/v2-specification.md#order-message-format) together with a [valid signature](https://github.com/0xProject/0x-protocol-specification/blob/master/v2/v2-specification.md#signature-types) (e.g., a valid elliptic curve signature generated from the traders Ethereum address) of its contents.
 
 #### 3. Settlement of trades
 
@@ -122,7 +122,7 @@ Because the 0x Protocol checks order expiration using block timestamps, the orde
 
 #### Miner discretion
 
-In most blockchains, the miner decides which valid transactions to include in the next block they attempt to mine. They are expected to be economically rational agents who will prioritize transactions that pay them the most fees, however they have full discretion over transaction ordering.
+In most blockchains, the miner decides which valid transactions to include in the next block they attempt to mine. They are expected to be economically rational agents who will prioritize transactions that pay them the most fees; however, they have full discretion over transaction ordering.
 
 Let's say a trader submits an order cancellation transaction; there are no guarantees about the order in which this transaction will be included in the blockchain. You can try and incentize miners to include it sooner by increasing the `gasPrice` (read: fee) paid for the transaction, but so can any other trader attempting to fill the order (read more about this problem in our [front-running, griefing and the perils of virtual settlement](https://blog.0xproject.com/front-running-griefing-and-the-perils-of-virtual-settlement-part-1-8554ab283e97) blog post series). Because of this race-condition, we recommend you use shorter expiration times on your orders rather than relying heavily on on-chain cancellations. Alternatively, you can use our [cancelOrdersUpTo](https://github.com/0xProject/0x-protocol-specification/blob/master/v2/v2-specification.md#cancelordersupto) feature to cancel multiple orders in a single transaction.
 
@@ -153,7 +153,7 @@ The following non-comprehensive list of protocols may be used for borrowing, len
 
 While taking orders benefits from the [atomicity](#transaction-atomicity) of Ethereum transactions, hedging one of your own orders that has been taken will always be asynchronous. Because Ethereum transactions currently have [probabilistic finality](#probabilistic-finality), market makers should be careful to monitor the state of their own filled orders before and after executing the hedge. For example, the following scenario is possible (though unlikely):
 
-1. A market maker sees a pending fill of her own order in the mempool.
+1. A market maker sees a pending fill of their own order in the mempool.
 1. The market maker hedges by taking the opposite position of the same asset on a CEX.
 1. The original fill fails due to an insufficient balance or allowance of the taker, and the maker is left with only the hedge leg of their position.
 
